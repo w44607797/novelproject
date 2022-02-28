@@ -8,16 +8,28 @@
         from novelproject.account
         where user_id = #{id}
     </select>
-    <select id="getPasswordById" resultType="String">
-        select user_password
-        from novelproject.account
-        where user_id = #{id}
-    </select>
     <insert id="insertUser">
-        insert into novelproject.account (user_id, user_name, user_password)
-        values (#{id}, #{name}, #{password})
+        insert into novelproject.account (user_id, user_name, user_password,salt)
+        values (#{id}, #{name}, #{password},#{salt})
     </insert>
-    <select id="getSalt" resultType="String">
-        select salt from novelproject.account where user_id = #{id}
+    <select id="getUserDetailById" resultType="com.guo.bean.Account">
+        select ${condition} from novelproject.account where 1=1
+        <trim suffixOverrides=",">
+
+            <if test="userId != null">
+                and user_id = #{userId},
+            </if>
+            <if test="userName != null">
+                and user_name = #{userName},
+            </if>
+        </trim>
     </select>
+    <update id="updateUser">
+        update novelproject.novel
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userName!=null">user_name=#{userName},</if>
+            <if test="userPassword!=null">user_password=#{userPassword},</if>
+        </trim>
+        where user_id=userId
+    </update>
 </mapper>

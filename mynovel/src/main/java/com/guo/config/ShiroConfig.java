@@ -22,12 +22,14 @@ public class ShiroConfig {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(manager);
         Map<String,String> map = new HashMap<>();
-        map.put("/demo","authc");
-        map.put("/demodemo","anon");
         map.put("/share/**","anon");
         map.put("/admin/**","authc");
+        map.put("/novel/**","authc");
+        map.put("/logout","authc");
+        map.put("/author","authc");
+
+        factoryBean.setLoginUrl("/nologin");
         factoryBean.setFilterChainDefinitionMap(map);
-        factoryBean.setLoginUrl("/login");
         factoryBean.setUnauthorizedUrl("/unauth");
         return factoryBean;
     }

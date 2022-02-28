@@ -27,9 +27,20 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        simpleAuthorizationInfo.addRole("admin");
-        simpleAuthorizationInfo.addRole("superadmin");
-        simpleAuthorizationInfo.addStringPermission("user:delete:*");
+        String permission;
+        //目前就user以及admin所以就不讨论多个权限的情况了
+        try {
+            permission = accountService.getpermission(principalCollection.getPrimaryPrincipal());
+        }catch (NumberFormatException numberFormatException){
+            log.error("授权时传入账号格式错误:primaryPrincipal:"+(String) principalCollection.getPrimaryPrincipal());
+            return null;
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("查询账号权限数据库操作错误");
+            return null;
+        }
+        simpleAuthorizationInfo.addRole(permission);
+        //simpleAuthorizationInfo.addStringPermission("user:delete:*");
         return simpleAuthorizationInfo;
     }
 

@@ -6,7 +6,10 @@ import com.guo.service.mapper.NovelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +20,7 @@ import java.util.Map;
 
 @Service
 @Slf4j
+@Transactional
 public class NovelServiceImpl implements NovelService {
 
     @Autowired
@@ -46,6 +50,7 @@ public class NovelServiceImpl implements NovelService {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("数据库删除失败");
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return -1;
         }
         return number;
@@ -53,17 +58,65 @@ public class NovelServiceImpl implements NovelService {
 
     @Override
     public int passPandingNovel(int id) {
-        Novel novel = new Novel();
-        novel.setNovelId(id);
-        novel.setStatus((byte) 1);
+        Map<String,Integer> map = new HashMap<>();
+        map.put("status",1);
+        map.put("novelId",id);
         int result = 0;
         try {
-            result = novelMapper.passPandingNovel(novel);
+            result = novelMapper.reviseNovel(map);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("数据库层面更新失败");
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
         return result;
+    }
+
+    @Override
+    public int updateNovel(int novelId,String column,String content) {
+        if(column.equals("novelId") || column.equals("status") || column.equals("imgPath")){
+            log.error("非法修改特殊参数");
+            return 0;
+        }
+        int result;
+        try {
+            Map<String,Object> map = new HashMap<>();
+            map.put(column,content);
+            map.put("novelId",novelId);
+            result = novelMapper.reviseNovel(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("数据库层面修改小说参数出错");
+            result = -1;
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+        }
+        return result;
+    }
+
+    @Override
+    public Novel getDetailByParam(String aim,String condition,Object value) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("condition",aim);
+        map.put(condition,value);
+        Novel novel = null;
+        try{
+            novel = novelMapper.getDetailByParam(map);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.error("查询不到对应的小说");
+        }
+        return novel;
+    }
+
+
+    @Override
+    public void NovelAddParam(List<Novel> novelList) {
+
+    }
+
+    @Override
+    public void NovelAddParam(Novel novel) {
+
     }
 
 

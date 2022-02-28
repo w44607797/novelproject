@@ -2,6 +2,7 @@ package com.guo.bean.mapper;
 
 import com.guo.bean.Novel;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,7 +19,9 @@ public interface NovelMapper {
     List<Novel> getNovelList(Map<String,String> map);
     List<Novel> getPandingNovel();
     int deletePandingNovel(int id);
-    int passPandingNovel(Novel novel);
-    Novel getAllDetail(int novelId);
+    int reviseNovel(Map map);
+    List<Novel> getRecomand(int begin);
+    Novel getDetailByParam(Map map);
+
     
 }

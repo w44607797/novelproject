@@ -18,5 +18,7 @@ public interface AccountService {
     String getPasswordById(int id);
     boolean insertUser(String userName,int userId,String userPassword);
     String getSalt(int id);
-
+    Account getUserDetailById(String object,String[] condition,String[] value);
+    Account getUserDetailById(String aim,String condition,Object value);
+    String getpermission(Object id);
 }

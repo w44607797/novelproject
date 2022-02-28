@@ -16,10 +16,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseEntity<T> implements Serializable {
+    private static final long serialVersionUID = 1L;
     private T data;
     private boolean success;
     private int code;
     private String message;
+
 
     public static <T> BaseEntity<T> success(T t){
         BaseEntity<T> baseEntity = new BaseEntity<>();

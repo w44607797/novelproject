@@ -2,7 +2,10 @@ package com.guo.bean.mapper;
 
 import com.guo.bean.Account;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Map;
 
 
 /**
@@ -12,8 +15,11 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface AccountMapper {
-    public Account getAccountById(int id);
-    String getPasswordById(int id);
-    void insertUser(String user_name,int user_id,String user_passworld);
-    String getSalt(int id);
+    Account getAccountById(int id);
+    void insertUser(@Param("name")String user_name,
+                    @Param("id")int user_id,
+                    @Param("password")String user_passworld,
+                    @Param("salt")String salt);
+    Account getUserDetailById(Map map);
+    Account updateUser(Map map);
 }
