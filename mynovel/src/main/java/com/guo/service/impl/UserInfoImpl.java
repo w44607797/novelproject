@@ -85,4 +85,9 @@ public class UserInfoImpl implements UserInfoService {
         String base64 = FileUtil.fileToBase64(file);
         return base64;
     }
+
+    @Override
+    public UserInfo getUserInfo(Map map) {
+        return userInfoMapper.getUserInfo(map);
+    }
 }

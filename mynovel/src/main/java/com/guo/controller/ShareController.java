@@ -1,12 +1,10 @@
 package com.guo.controller;
 
-import com.guo.bean.Account;
-import com.guo.bean.BaseEntity;
-import com.guo.bean.Novel;
-import com.guo.bean.UserInfo;
+import com.guo.bean.*;
 import com.guo.bean.mapper.UserInfoMapper;
 import com.guo.service.mapper.AccountService;
 import com.guo.service.mapper.NovelService;
+import com.guo.service.mapper.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +34,8 @@ public class ShareController {
     NovelService novelService;
 
     @Autowired
-    UserInfoMapper userInfoMapper;
+    UserInfoService userInfoService;
+
 
 
     //模糊搜索小说，匹配关键字
@@ -72,18 +71,25 @@ public class ShareController {
 
 
     @GetMapping("/userinfo/{userName}")
-        public BaseEntity<UserInfo> getUserInfo(@PathVariable("userName")String userName){
+        public BaseEntity<UserInfo> getUserInfo(@PathVariable("userName")String userName) throws IOException {
         Map<String,Object> map = new HashMap<>();
         map.put("userName",userName);
         UserInfo userInfo = null;
         try {
-            userInfo = userInfoMapper.getUserInfo(map);
+            userInfo = userInfoService.getUserInfo(map);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("数据库查询用户个人资料失败");
             return BaseEntity.failed(550,"服务端出错，请联系管理员");
         }
-        System.out.println(userInfo);
+        ImgFile imgFile = new ImgFile();
+        try {
+            String headShotBase64 = userInfoService.getHeadShotBase64(userInfo.getUserId());
+            imgFile.setBase64Encode(headShotBase64);
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error("数据库获取用户头像错误");
+        }
         return BaseEntity.success(userInfo);
 
 
