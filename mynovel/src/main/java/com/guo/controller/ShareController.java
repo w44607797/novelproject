@@ -70,12 +70,11 @@ public class ShareController {
         return BaseEntity.success(novelList);
     }
 
-    //userinfo相关的内容还没有完善
 
-    @GetMapping("/userinfo/{userid}")
-        public BaseEntity<UserInfo> getUserInfo(@PathVariable("userid")String userId){
+    @GetMapping("/userinfo/{userName}")
+        public BaseEntity<UserInfo> getUserInfo(@PathVariable("userName")String userName){
         Map<String,Object> map = new HashMap<>();
-        map.put("user_id",userId);
+        map.put("userName",userName);
         UserInfo userInfo = null;
         try {
             userInfo = userInfoMapper.getUserInfo(map);
@@ -84,6 +83,7 @@ public class ShareController {
             log.error("数据库查询用户个人资料失败");
             return BaseEntity.failed(550,"服务端出错，请联系管理员");
         }
+        System.out.println(userInfo);
         return BaseEntity.success(userInfo);
 
 

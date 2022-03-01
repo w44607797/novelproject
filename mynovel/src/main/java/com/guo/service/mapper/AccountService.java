@@ -21,4 +21,5 @@ public interface AccountService {
     Account getUserDetailById(String object,String[] condition,String[] value);
     Account getUserDetailById(String aim,String condition,Object value);
     String getpermission(Object id);
+    String addUserInfo(int userId);
 }

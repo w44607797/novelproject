@@ -143,4 +143,9 @@ public class AccountServiceImpl implements AccountService {
         return account.getPermission();
     }
 
+    @Override
+    public String addUserInfo(int userId) {
+        return null;
+    }
+
 }

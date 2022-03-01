@@ -2,9 +2,11 @@ package com.guo.service.impl;
 
 import com.guo.bean.Novel;
 import com.guo.bean.mapper.NovelMapper;
+import com.guo.bean.mapper.UserInfoMapper;
 import com.guo.service.mapper.FileService;
 import com.guo.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +28,9 @@ public class FileServiceImpl implements FileService {
 
     @Autowired
     NovelMapper novelMapper;
+
+    @Autowired
+    UserInfoMapper userInfoMapper;
 
     private static final String FILE_PATH = "E:/myservice";
 
@@ -86,6 +91,28 @@ public class FileServiceImpl implements FileService {
             log.error("文件上传IO流出错");
             return "业务出错,请联系管理员";
         }
+
+        //如果存放的是头像就在此终止
+
+        if(path.equals("/headshot")){
+            Map<String,Object> map = new HashMap<>();
+            map.put("headshot",totalPath);
+            try {
+                userInfoMapper.updateUserInfo(map);
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.error("数据库添加头像路径出错");
+                //不存放头像
+                File headfile = new File(totalPath);
+                headfile.delete();
+                return "服务端出错，请联系管理员";
+            }
+            return null;
+        }
+
+
+
+
         Map<String, Object> uploadMap = new HashMap<>();
         uploadMap.put("novelId", novelId);
 
@@ -96,7 +123,6 @@ public class FileServiceImpl implements FileService {
         } else {
             uploadMap.put("imgPath", totalPath);
         }
-        System.out.println(totalPath);
         try {
             novelMapper.reviseNovel(uploadMap);
         } catch (Exception e) {
@@ -159,7 +185,7 @@ public class FileServiceImpl implements FileService {
             log.error("文件内容提取失败");
             return "获取小说内容失败";
         }
-        return outputStream.toString(StandardCharsets.UTF_8);
+        return outputStream.toString(String.valueOf(StandardCharsets.UTF_8));
     }
 
     @Override
