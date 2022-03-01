@@ -69,6 +69,7 @@ public class ShareController {
         return BaseEntity.success(novelList);
     }
 
+    //搜索用户信息的api
 
     @GetMapping("/userinfo/{userName}")
         public BaseEntity<UserInfo> getUserInfo(@PathVariable("userName")String userName) throws IOException {
@@ -82,6 +83,9 @@ public class ShareController {
             log.error("数据库查询用户个人资料失败");
             return BaseEntity.failed(550,"服务端出错，请联系管理员");
         }
+
+        //返回的信息携带头像图片参数
+
         ImgFile imgFile = new ImgFile();
         try {
             String headShotBase64 = userInfoService.getHeadShotBase64(userInfo.getUserId());

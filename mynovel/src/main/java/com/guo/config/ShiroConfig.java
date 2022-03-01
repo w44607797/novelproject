@@ -22,10 +22,15 @@ public class ShiroConfig {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
         factoryBean.setSecurityManager(manager);
         Map<String,String> map = new HashMap<>();
+        //主页
         map.put("/share/**","anon");
+        //管理员api
         map.put("/admin/**","authc");
+        //关于小说的
         map.put("/novel/**","authc");
+        //登出
         map.put("/logout","authc");
+        //作者相关
         map.put("/author","authc");
 
         factoryBean.setLoginUrl("/nologin");

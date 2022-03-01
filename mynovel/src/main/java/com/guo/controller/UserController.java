@@ -95,10 +95,14 @@ public class UserController {
         return BaseEntity.failed(102, "id已存在或注册插入错误");
     }
 
+    //没有登录的界面
+
     @GetMapping("/nologin")
     public BaseEntity noLoginPage() {
         return BaseEntity.failed(103, "还未登录");
     }
+
+    //给用户更新用户资料的api
 
     @PostMapping("/user/updateinfo")
     public BaseEntity updateUserInfo(@RequestParam(value = "userName",required = false)String userName,
@@ -120,6 +124,8 @@ public class UserController {
         return BaseEntity.success();
 
     }
+
+    //更新或上传用户头像api
 
     @PostMapping("/userinfo/update/headshot")
     public BaseEntity updateHeadShot(MultipartFile multipartFile,

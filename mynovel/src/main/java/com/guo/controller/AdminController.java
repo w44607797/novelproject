@@ -48,7 +48,7 @@ public class AdminController {
         }
     }
 
-    //通过审核的小说
+    //审核小说通过api
 
     @PutMapping("/novel/pass/{id}")
     public BaseEntity auditPass(@PathVariable("id") int id) {
