@@ -3,6 +3,7 @@ package com.guo.service.mapper;
 import com.guo.bean.Novel;
 import org.apache.ibatis.annotations.Param;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,8 @@ public interface NovelService {
     int deletePandingNovel(int id);
     int passPandingNovel(int id);
     int updateNovel(int novelId,String column,String content);
-    Novel getDetailByParam(String aim,String condition,Object value);
-    void NovelAddParam(List<Novel> novelList);
-    void NovelAddParam(Novel novel);
+    List<Novel> getDetailByParam(Map map);
+    void NovelAddParam(List<Novel> novelList) throws IOException;
+    void NovelAddParam(Novel novel) throws IOException;
+    List<Novel> getRecomandList(int begin);
 }

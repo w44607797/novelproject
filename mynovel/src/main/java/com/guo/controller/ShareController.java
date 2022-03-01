@@ -12,6 +12,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,25 +38,25 @@ public class ShareController {
     @Autowired
     UserInfoMapper userInfoMapper;
 
-    //搜索用户得到用户信息
-    //匹配多个用户
 
-
-
+    //模糊搜索小说，匹配关键字
     @GetMapping("/searchnovel/{authorname}/{novelname}")
-    public BaseEntity<List<Novel>> getNovel(@RequestParam("authorname") String authorName,
-                                @RequestParam("novelname") String novelName) {
+    public BaseEntity<List<Novel>> getNovel(@RequestParam(value = "authorname",required = false) String authorName,
+                                @RequestParam(value = "novelname",required = false) String novelName) {
         HashMap<String, String> map = new HashMap();
         map.put("authorName", authorName);
         map.put("novelName", novelName);
         List<Novel> novelList = novelService.searchNovel(map);
         return BaseEntity.success(novelList);
     }
-    @GetMapping("/recomand")
-    public BaseEntity<List<Novel>> getRecomandList(){
+
+    //分页展示小说推荐页面
+
+    @GetMapping("/recomand/{begin}")
+    public BaseEntity<List<Novel>> getRecomandList(@PathVariable("begin")int begin) throws IOException {
         List<Novel> novelList;
         try {
-            novelList = novelService.getPandingNovel();
+            novelList = novelService.getRecomandList(begin);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("查询推荐小说业务失败");
@@ -65,20 +66,27 @@ public class ShareController {
             log.error("查询推荐小说结果为空");
             return BaseEntity.failed(530,"获取推荐小说列表失败");
         }
+            novelService.NovelAddParam(novelList);
         return BaseEntity.success(novelList);
     }
+
+    //userinfo相关的内容还没有完善
 
     @GetMapping("/userinfo/{userid}")
         public BaseEntity<UserInfo> getUserInfo(@PathVariable("userid")String userId){
         Map<String,Object> map = new HashMap<>();
         map.put("user_id",userId);
-        UserInfo userInfo = userInfoMapper.getUserInfo(map);
+        UserInfo userInfo = null;
+        try {
+            userInfo = userInfoMapper.getUserInfo(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("数据库查询用户个人资料失败");
+            return BaseEntity.failed(550,"服务端出错，请联系管理员");
+        }
         return BaseEntity.success(userInfo);
 
 
     }
-
-
-
 
 }

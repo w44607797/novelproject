@@ -21,7 +21,7 @@ public interface NovelMapper {
     int deletePandingNovel(int id);
     int reviseNovel(Map map);
     List<Novel> getRecomand(int begin);
-    Novel getDetailByParam(Map map);
-
+    Novel getDetailByParamWithId(Map map);
+    List<Novel> getDetailByParam(Map map);
     
 }

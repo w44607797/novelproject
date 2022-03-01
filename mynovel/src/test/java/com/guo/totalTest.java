@@ -56,15 +56,22 @@ public class totalTest {
         System.out.println(userDetailById);
     }
 
-    @Test
-    public void getNovelDetail(){
-        Novel detailByParam = novelService.getDetailByParam("text_path", "novelId", 1);
-        System.out.println(detailByParam);
-    }
+//    @Test
+//    public void getNovelDetail(){
+//        Novel detailByParam = novelService.getDetailByParam("text_path", "novelId", 1);
+//        System.out.println(detailByParam);
+//    }
     @Test
     public void getFileContentTest() throws IOException {
         String fileContent = fileService.getFileContent(1);
         System.out.println(fileContent);
 
+    }
+    @Test
+    public void getPath(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("condition","img_path");
+        map.put("novelId",2);
+            System.out.println(novelMapper.getDetailByParam(map));
     }
 }

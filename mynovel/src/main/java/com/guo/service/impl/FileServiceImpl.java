@@ -124,7 +124,7 @@ public class FileServiceImpl implements FileService {
 
         Novel detailByParam;
         try {
-            detailByParam = novelMapper.getDetailByParam(map);
+            detailByParam = novelMapper.getDetailByParamWithId(map);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("数据库查询小说内容地址出错");
@@ -165,6 +165,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public String storageContent(String content) throws IOException {
         String resultPath;
+        //拼接小说内容存储地址
         try{
             StringBuilder stringBuilder = new StringBuilder(60);
             String uuid = FileUtil.getUUID();
@@ -178,7 +179,8 @@ public class FileServiceImpl implements FileService {
             log.error("生成存储地址出错(StringBuilder)");
             return "小说内容上传出错,请联系管理员";
         }
-        FileOutputStream outputStream = new FileOutputStream(resultPath);
+        //追加写入小说内容
+        FileOutputStream outputStream = new FileOutputStream(resultPath,true);
         try{
             byte[] bytes = content.getBytes();
             outputStream.write(bytes);
@@ -192,6 +194,7 @@ public class FileServiceImpl implements FileService {
     }
 
 
+    //获得图片文件base64码
 
     @Override
     public String getBase64ImgFile(int novelId) throws IOException {
@@ -200,7 +203,7 @@ public class FileServiceImpl implements FileService {
         map.put("novelId",novelId);
         Novel novel = null;
         try {
-            novel = novelMapper.getDetailByParam(map);
+            novel = novelMapper.getDetailByParamWithId(map);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("查询小说图片地址出错");
@@ -213,6 +216,7 @@ public class FileServiceImpl implements FileService {
 
     }
 
+    //获得小说内容存储地址
 
     @Override
     public String getTextFilePath(int novelId) {
@@ -221,7 +225,7 @@ public class FileServiceImpl implements FileService {
         map.put("novelId",novelId);
         String path;
         try {
-            Novel novel = novelMapper.getDetailByParam(map);
+            Novel novel = novelMapper.getDetailByParamWithId(map);
             path = novel.getTextPath();
         } catch (Exception e) {
             e.printStackTrace();
@@ -236,15 +240,17 @@ public class FileServiceImpl implements FileService {
 
     }
 
+    //获得小说图片存储地址
+
     @Override
     public String getImgFilePath(int novelId) {
         Map<String,Object> map = new HashMap<>();
         map.put("condition","img_path");
         map.put("novelId",novelId);
-        novelMapper.getDetailByParam(map);
+        novelMapper.getDetailByParamWithId(map);
         String path;
         try {
-            Novel novel = novelMapper.getDetailByParam(map);
+            Novel novel = novelMapper.getDetailByParamWithId(map);
             path = novel.getImgPath();
         } catch (Exception e) {
             e.printStackTrace();

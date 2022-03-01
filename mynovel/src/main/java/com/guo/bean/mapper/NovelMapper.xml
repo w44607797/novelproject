@@ -3,6 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.guo.bean.mapper.NovelMapper">
+    <sql id="Param">
+        <trim suffixOverrides=",">
+            <if test="novelId!=null">and novel_id=#{novelId},</if>
+            <if test="novelName!=null">and novel_name=#{novelName},</if>
+            <if test="uploadTime!=null">and upload_time=#{uploadTime},</if>
+            <if test="textPath!=null">and text_path=#{textPath},</if>
+            <if test="title!=null">and title=#{title},</if>
+            <if test="imgPath!=null">and img_path=#{imgPath},</if>
+            <if test="status!=null">and status=#{status},</if>
+            <if test="type!=null">and type=#{type},</if>
+            <if test="authorId!=null">and author_id=#{authorId},</if>
+            <if test="status!=null">and status=#{status},</if>
+            <if test="authorName!=null">and author_Name=#{authorName}</if>
+        </trim>
+    </sql>
+
+
     <select id="getNovelList" resultType="com.guo.bean.Novel">
         select * from novelproject.novel where 1=1
         <if test="novelName != null">
@@ -13,8 +30,14 @@
         </if>
     </select>
     <select id="getPandingNovel" resultType="com.guo.bean.Novel">
-        select
-        * from novelproject.novel where status = 0
+        select novel_id,
+               novel_name,
+               upload_time,
+               author_name,
+               title,
+               type
+        from novelproject.novel
+        where status = 0
     </select>
     <insert id="insertNovel">
         insert into novelproject.novel (novel_name, novel_id, upload_time,
@@ -43,44 +66,38 @@
         where novel_id = #{novelId}
     </update>
 
-<!--    <resultMap id="novelMap" type="com.guo.bean.Novel">-->
-<!--        <id property="novelId" column="novel_id"/>-->
-<!--        <result property="novelName" column="novel_name"/>-->
-<!--        <result property="uploadTime" column="upload_time"/>-->
-<!--        <result property="textPath" column="text_path"/>-->
-<!--        <result property="title" column="title"/>-->
-<!--        <result property="status" column="status"/>-->
-<!--        <result property="authorName" column="author_name"/>-->
-<!--        <result property="type" column="type"/>-->
-<!--        <collection property="author" ofType="com.guo.bean.Account">-->
-<!--            <result property="userId" column="author_id"/>-->
-<!--            <result property="userName" column="user_name"/>-->
-<!--        </collection>-->
-<!--    </resultMap>-->
+    <!--    <resultMap id="novelMap" type="com.guo.bean.Novel">-->
+    <!--        <id property="novelId" column="novel_id"/>-->
+    <!--        <result property="novelName" column="novel_name"/>-->
+    <!--        <result property="uploadTime" column="upload_time"/>-->
+    <!--        <result property="textPath" column="text_path"/>-->
+    <!--        <result property="title" column="title"/>-->
+    <!--        <result property="status" column="status"/>-->
+    <!--        <result property="authorName" column="author_name"/>-->
+    <!--        <result property="type" column="type"/>-->
+    <!--        <collection property="author" ofType="com.guo.bean.Account">-->
+    <!--            <result property="userId" column="author_id"/>-->
+    <!--            <result property="userName" column="user_name"/>-->
+    <!--        </collection>-->
+    <!--    </resultMap>-->
     <select id="getRecomand" resultType="com.guo.bean.Novel">
-        select novel.novel_name,
+        select novel.novel_id,
+               novel.novel_name,
                novel.upload_time,
                novel.title,
                novel.type,
                account.user_name
         from novelproject.novel novel
                  join novelproject.account account
-        where novel.author_id = account.user_id limit #{begin},10
+        where novel.author_id = account.user_id limit #{begin}
+            , 10
+    </select>
+    <select id="getDetailByParamWithId" resultType="com.guo.bean.Novel">
+        select ${condition} from novelproject.novel where 1=1
+        <include refid="Param"></include>
     </select>
     <select id="getDetailByParam" resultType="com.guo.bean.Novel">
         select ${condition} from novelproject.novel where 1=1
-            <trim suffixOverrides=",">
-                    <if test="novelId!=null">and novel_id=#{novelId},</if>
-                    <if test="novelName!=null">and novel_name=#{novelName},</if>
-                    <if test="uploadTime!=null">and upload_time=#{uploadTime},</if>
-                    <if test="textPath!=null">and text_path=#{textPath},</if>
-                    <if test="title!=null">and title=#{title},</if>
-                    <if test="imgPath!=null">and img_path=#{imgPath},</if>
-                    <if test="status!=null">and status=#{status},</if>
-                    <if test="type!=null">and type=#{type},</if>
-                    <if test="authorId!=null">and author_id=#{authorId},</if>
-                    <if test="status!=null">and status=#{status},</if>
-                    <if test="authorName!=null">and author_Name=#{authorName}</if>
-            </trim>
+        <include refid="Param"></include>
     </select>
 </mapper>

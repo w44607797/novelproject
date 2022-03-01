@@ -10,6 +10,9 @@ import java.io.Serializable;
  * @createDate: 2022/2/26
  **/
 
+
+//userinfo相关的内容还没有完善
+
 @TableName("user_info")
 public class UserInfo implements Serializable {
     @TableField("user_id")
