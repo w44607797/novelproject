@@ -49,7 +49,7 @@ public class UserController {
             return BaseEntity.failed(100,"用户账号只能为0-9数字");
         }
         if(salt==null){
-            return BaseEntity.failed(110,"服务端查询出错，请联系管理员");
+            return BaseEntity.failed(110,"用户还没有注册");
         }
         String securityPassowrd = SecurityUtil.toMd5(password,salt);
 

@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN"><link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link type="text/css" rel="stylesheet" id="dark-mode-general-link"><style lang="en" type="text/css" id="dark-mode-custom-style"></style><style lang="en" type="text/css" id="dark-mode-native-style"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>福州大学一码通</title>
+
+    <style type="text/css">
+
+        .sweep_bg{background-color: #0a84bd;overflow:hidden;overflow-x:hidden;overflow-y:hidden}
+        .pay-container{width: 86%;margin: 30px auto 10px auto; height: 470px;background-color: #fff; border-radius: 8px 8px 8px 8px;text-align: center;}
+        .tx{
+            padding: 20px 0 20px 0;}
+        .bank{float: left;display: flex;align-items: center;justify-content: center;}
+        #payWay img{
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: .4rem;
+
+        }
+        .qr_code{
+            display: inline-block;
+            background-size: 110%;
+            margin: 0;
+        }
+        .obj{
+            outline:none;
+            line-height:29px;
+            padding:10px;
+            padding-bottom:0;
+            height:29px;
+
+            border-radius: 5px;
+        }
+        @-moz-document url-prefix() {
+            .obj{
+                outline:none;
+                line-height:40px;
+                padding:10px;
+                height:40px;
+                width: 170px;
+            }
+        }
+        @media all and (-ms-high-contrast:none){
+            .obj{
+                outline:none;
+                line-height:29px;
+                padding:10px;
+                padding-bottom:0;
+                height:29px;
+                width: 150px;
+            }
+        }
+
+
+
+
+
+    </style>
+
+
+    <script>
+        var qrcodeobj = $("#code").empty().qrcode({
+            render: "table", //table方式  canvas
+            correctLevel: 0,//纠错等级
+            //top: 800,
+            //background      : "#005992",//背景颜色
+            foreground: jkm, //前景颜色
+            text: qrcode//任意内容
+        });
+
+        //判断健康码颜色改变提示语
+        if (jkm == "#000000") {
+            $(".jkmColor").css("color", "#1d953f");
+            $("#slogan").html("未见异常，允许通行，请主动出示，配合检测，并做好自我防护，出行前请确认。");
+        } else if (jkm == "#d20c12") {
+            $(".jkmColor").css("color", jkm);
+            $("#reason").html("异常原因："+reason+",请咨询各单位疫情防控联络员。");
+            $("#reason").css("display", "block");
+            $("#slogan").html("此码不可通行，码颜色将根据您的健康信息和通行权限动态更新。");
+        } else {
+            $(".jkmColor").css("color", jkm);
+        }
+
+    </script>
+
+
+</head>
+<script>
+    var myVar2 = setInterval(function(){ getMonthAndDay() }, 1000);
+    var myVar1 = setInterval(function(){ getNowFormatDate() }, 1000);
+    function getNowFormatDate() {//获取当前时间
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1<10? "0"+(date.getMonth() + 1):date.getMonth() + 1;
+        var strDate = date.getDate()<10? "0" + date.getDate():date.getDate();
+        var hour = date.getHours()<10?"0" + date.getHours():date.getHours();
+        var minute = date.getMinutes()<10?"0" + date.getMinutes():date.getMinutes();
+        var second = date.getSeconds()<10?"0" + date.getSeconds():date.getSeconds();
+        var HourAndMinute = hour + seperator2 + minute;
+        //var currentdate = date.getFullYear() + seperator1  + month  + seperator1  + strDate
+        var currentdate = month  + seperator1  + strDate
+            + " "  + hour  + seperator2  + minute  + seperator2 + second
+        ;
+        //return currentdate;
+        document.getElementById("second").innerHTML = second;
+        document.getElementById("HourAndMinute").innerHTML = HourAndMinute;
+    }
+    function getMonthAndDay() {//获取当前时间
+        var date = new Date();
+        var month = date.getMonth() + 1<10? "0"+(date.getMonth() + 1):date.getMonth() + 1;
+        var strDate = date.getDate();
+        var currentdate = month  + "月" + strDate +"日";
+        //return currentdate;
+        document.getElementById("demo2").innerHTML = currentdate;
+
+    }
+    function display(y){$(y).style.display=($(y).style.display=="none")?"":"none";}
+    function $(s){return document.getElementById(s);}
+
+
+</script>
+<body class="sweep_bg">
+<div id="push" style="display:none" onclick="display('push')" value="显示/隐藏"/>
+<img src="fzu/images/barcode1.png" style="position: relative; width:100% ;position:fixed; bottom:0px;right:0px;">
+</div>
+
+
+<div style="font-size: 20px;color: white;position: relative;width: 86%;margin: 20px auto 0 auto;">
+    <img src="fzu/images/FZU.png" style="width: 99px; float: right; position: absolute;  right: 0px; top: -17px;">
+    <span id="span1" style="display: block;padding-bottom: 20px;">
+    <script text="javascript">
+span1.innerHTML = "姓名：郑世豪";
+</script>
+    </span>
+    <span id="span2" style="display: block;">
+
+    <script text="javascript">
+span2.innerHTML = "部门：梅努斯国际工程学院";
+</script>
+    </span>
+
+
+
+</div>
+<div class="pay-container">
+
+    <div class="tx">
+        <img id="barcode1" src="fzu/images/barcode1.png" style="width: 284px; height: 76px">
+        <div id="currentTime" class="jkmColor" style="font-size: large; margin:0 10px 10px 10px;height: 27px ;color: #1d953f;padding:0px 0 10px 0">
+            <b id="demo2"></b>
+            <b id="second" style="font-size: 35px;"></b>
+            <b id="HourAndMinute"></b>
+        </div>
+
+    </div>
+    <div id="codew" style="">
+
+
+        <div class="qr_code" style="width: 125px; height: 125px;" id="code">
+            <table style="border: 0px; border-collapse: collapse; width: 125px; height: 125px; background-color: rgb(255, 255, 255);">
+                <tr>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: rgb(255, 255, 255);"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: rgb(255, 255, 255);"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: rgb(255, 255, 255);"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: rgb(255, 255, 255);"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: rgb(255, 255, 255);"></td>
+                    <td style="background-color: rgb(255, 255, 255);"></td>
+                    <td style="background-color: rgb(255, 255, 255);"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                    <td style="background-color: #000000;"></td>
+                </tr>
+                <tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td></tr><tr><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td></tr><tr><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td></tr><tr><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: rgb(255, 255, 255);"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td><td style="background-color: #000000;"></td></tr></table></div>
+        <div>
+            <marquee class="jkmColor" style="height: 55px; font-size: 40px; display: block; padding-top: 0px; color: #1d953f;" id="marqueeStr">
+
+                <script>
+
+                    var startDate = new Date("2021-09-19");
+                    var endDate = new Date();
+                    var a = endDate.getTime();
+                    var b = startDate.getTime();
+
+                    var days = a-b;
+                    var i=parseInt((days/(24*60*60*1000))%12);
+
+                    var arr = [ "博学", "远志","明德", "至诚","富强", "民主","文明", "和谐", "自由", "平等","公正", "法治", "爱国", '敬业', "诚信", "友善"];
+
+
+                    var marq = document.getElementById("marqueeStr");
+                    marq.innerHTML = arr[i];
+
+                </script>
+
+
+
+
+
+
+            </marquee>
+        </div>
+        <div id="reason" class="jkmColor" style="display: none; text-align: left; width: 80%; margin: 0px auto; color: #1d953f;"></div>
+        <div id="slogan" class="jkmColor" style="width: 80%; text-align: left; font-size: small;margin: 0px auto; color: #1d953f;">
+            未见异常，允许通行，请主动出示，配合检测，并做好自我防护，出行前请确认。
+        </div>
+    </div>
+
+
+    <div id="payWay" class="bank" style="align-items:center;padding-top: 20px; justify-content:center;line-height: normal; margin-left: 30px;" onclick="display('push')" value="显示/隐藏"/>
+    <img src="fzu/images/card1.jpg">
+    <div style="text-align: left; font-size:13px;"><div style="font-weight: 600;">一卡通</div>
+        <div>适用所有场景</div>
+    </div>
+</div>
+
+
+
+
+
+</div>
+<div class="mui-content">
+    <div class="mui-content-padded"></div>
+</div>
+<div style="      margin: 30px;  text-align: center;">
+    <a href="http://ehall.fzu.edu.cn/qljfwapp/sys/lwReportEpidemic/*default/index.do#/" style="color: white;font-size: large;font-weight: 700;    border-radius: 5px;padding: 2px 6px 2px 6px;border: 1px solid;text-decoration: none;">每日健康填报</a>
+
+</div>
+
+
+<div class="shadeBg">
+</div>
+
+
+<form action="/ThirdWeb/OrderResult" id="form1" method="POST">
+    <input type="hidden" name="txtvalue" id="txtvalue">
+    <input type="hidden" id="appUrl" value="">
+    <inout type="hidden" id="appFlag" value="">
+        <inout type="hidden" id="isshowheader" value="0">
+
+
+            <div style="display: none;" id="qrcode0">40271680134382902091</div>
+
+            <div style="display: none;" id="qrcode1">40129490215991224040</div>
+
+            <div style="display: none;" id="qrcode2">40553774816349766748</div>
+
+            <div style="display: none;" id="qrcode3">40969437373408828805</div>
+
+            <div style="display: none;" id="qrcode4">40842613600507851334</div>
+
+            <div style="display: none;" id="qrcode5">40288832209278333372</div>
+
+            <div style="display: none;" id="qrcode6">40072411261355367651</div>
+
+            <div style="display: none;" id="qrcode7">40114726094657611009</div>
+
+            <div style="display: none;" id="qrcode8">40960318956727092468</div>
+
+            <div style="display: none;" id="qrcode9">40231089020913534744</div>
+
+
+
+
+        </inout></inout></form>
+<div class="my-loading-box" style="z-index: 4000; position: absolute; display: none;">
+    <div class="my-loading-img"></div>
+    <div class="my-loading-title"></div>
+</div>
+<div style="width: 100%; height: 100%; opacity: 0.4; background: rgb(255, 255, 255); position: absolute; top: 0px; left: 0px; z-index: 3000; display: none;">
+
+</div>
+<div id="fullbg" style="width: 473px; height: auto; display: block;"></div>
+
+<br>
+<br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+
+</html>

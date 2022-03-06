@@ -4,6 +4,7 @@ package com.guo.controller;
 import com.guo.bean.BaseEntity;
 import com.guo.bean.Novel;
 import com.guo.service.mapper.FileService;
+import com.guo.service.mapper.NovelService;
 import com.guo.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
@@ -25,10 +26,12 @@ public class AuthorController {
     @Autowired
     FileService fileService;
 
+    @Autowired
+    NovelService novelService;
 
     //提交小说
     @PostMapping("/admit")
-    public String admitNovel(@RequestParam("novelName") String novelName,
+    public BaseEntity admitNovel(@RequestParam("novelName") String novelName,
                              @RequestParam("text")String text,
                              @RequestParam("authorName")String authorName,
                              @RequestParam("authorId")int authorId,
@@ -41,7 +44,15 @@ public class AuthorController {
         novel.setAuthorName(authorName);
         novel.setTitle(title);
         novel.setType(type);
-        return null;
+        novel.setStatus((byte)0);
+        try {
+            novelService.insertNovel(novel);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("小说上传失败");
+            return BaseEntity.failed(500,"小说上传失败，请联系管理员");
+        }
+        return BaseEntity.success();
     }
 
     @PostMapping("/uploadcontent")
@@ -53,10 +64,9 @@ public class AuthorController {
         } catch (IOException e) {
             e.printStackTrace();
             log.error("更新小说内容失败");
-            return null;
-
+            return BaseEntity.failed(510,"小说内容上传失败，请联系管理员");
         }
-        return null;
+        return BaseEntity.success();
 
     }
 
@@ -69,7 +79,9 @@ public class AuthorController {
 
         String path = "/cover";
 
-        String extendsion = (Objects.requireNonNull(FileUtil.getFileExtension(file))).toLowerCase(Locale.ROOT);
+        String extendsion = (Objects.requireNonNull(FileUtil.
+                getFileExtension(file))).
+                toLowerCase(Locale.ROOT);
         if(!(extendsion.equals(".png") ||
                 extendsion.equals(".jpg") ||
                 extendsion.equals(".bmp")||
@@ -93,7 +105,9 @@ public class AuthorController {
 
         String path = "/content";
 
-        String extendsion = (Objects.requireNonNull(FileUtil.getFileExtension(file))).toLowerCase(Locale.ROOT);
+        String extendsion = (Objects.requireNonNull(FileUtil.
+                getFileExtension(file))).
+                toLowerCase(Locale.ROOT);
         if (!extendsion.equals(".txt")) {
             return BaseEntity.failed(501,"上传的文件类型不符合");
         }

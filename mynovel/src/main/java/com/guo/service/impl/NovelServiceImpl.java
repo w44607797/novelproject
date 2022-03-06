@@ -149,5 +149,10 @@ public class NovelServiceImpl implements NovelService {
         return novelMapper.getRecomand(begin);
     }
 
+    @Override
+    public int insertNovel(Novel novel) {
+        return novelMapper.insertNovel(novel);
+    }
+
 
 }

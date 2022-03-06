@@ -30,4 +30,7 @@
     <insert id="insertUserInfo">
         insert into novelproject.user_info (user_id,user_name,email) value (#{userId},#{userName},#{email})
     </insert>
+    <select id="getUserImgPath" resultType="String">
+        select headshot from novelproject.user_info where user_id = #{userId}
+    </select>
 </mapper>

@@ -23,5 +23,6 @@ public interface NovelMapper {
     List<Novel> getRecomand(int begin);
     Novel getDetailByParamWithId(Map map);
     List<Novel> getDetailByParam(Map map);
+    int insertNovel(Novel novel);
     
 }

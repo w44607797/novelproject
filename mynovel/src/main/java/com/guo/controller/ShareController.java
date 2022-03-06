@@ -39,13 +39,15 @@ public class ShareController {
 
 
     //模糊搜索小说，匹配关键字
-    @GetMapping("/searchnovel/{authorname}/{novelname}")
+    @GetMapping("/searchnovel")
     public BaseEntity<List<Novel>> getNovel(@RequestParam(value = "authorname",required = false) String authorName,
-                                @RequestParam(value = "novelname",required = false) String novelName) {
+                                @RequestParam(value = "novelname",required = false) String novelName) throws IOException {
         HashMap<String, String> map = new HashMap();
         map.put("authorName", authorName);
         map.put("novelName", novelName);
         List<Novel> novelList = novelService.searchNovel(map);
+        //添加图片参数
+        novelService.NovelAddParam(novelList);
         return BaseEntity.success(novelList);
     }
 

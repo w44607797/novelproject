@@ -22,7 +22,6 @@ public class BaseEntity<T> implements Serializable {
     private int code;
     private String message;
 
-
     public static <T> BaseEntity<T> success(T t){
         BaseEntity<T> baseEntity = new BaseEntity<>();
         baseEntity.setSuccess(true);

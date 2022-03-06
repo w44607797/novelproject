@@ -23,4 +23,5 @@ public interface NovelService {
     void NovelAddParam(List<Novel> novelList) throws IOException;
     void NovelAddParam(Novel novel) throws IOException;
     List<Novel> getRecomandList(int begin);
+    int insertNovel(Novel novel);
 }
