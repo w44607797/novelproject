@@ -23,5 +23,7 @@ E:\ideaprojects\novelproject\mynovel\src\main\java\com\guo\config\UserRealm.java
 E:\ideaprojects\novelproject\mynovel\src\main\java\com\guo\controller\UserController.java
 E:\ideaprojects\novelproject\mynovel\src\main\java\com\guo\utils\SecurityUtil.java
 E:\ideaprojects\novelproject\mynovel\src\main\java\com\guo\bean\BaseEntity.java
+E:\ideaprojects\novelproject\mynovel\src\main\java\com\guo\config\SwaggerConfig.java
 E:\ideaprojects\novelproject\mynovel\src\main\java\com\guo\bean\mapper\AccountMapper.java
+E:\ideaprojects\novelproject\mynovel\src\main\java\com\guo\config\NoPermissionException.java
 E:\ideaprojects\novelproject\mynovel\src\main\java\com\guo\service\impl\AccountServiceImpl.java

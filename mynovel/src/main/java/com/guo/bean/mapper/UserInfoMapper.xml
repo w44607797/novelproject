@@ -5,10 +5,8 @@
 <mapper namespace="com.guo.bean.mapper.UserInfoMapper">
     <update id="updateUserInfo">
         update novelproject.user_info
-        <trim suffix="set" suffixOverrides=",">
-            <if test="userId!=null">user_id=#{userId}</if>
+        <trim prefix="set" suffixOverrides=",">
             <if test="userName!=null">user_name=#{userName}</if>
-            <if test="headshot!=null">headshot=#{headshot}</if>
             <if test="email!=null">email=#{email},</if>
         </trim>
         where user_id = #{userId}

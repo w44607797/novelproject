@@ -8,6 +8,8 @@ import com.guo.bean.mapper.UserInfoMapper;
 import com.guo.service.mapper.AccountService;
 import com.guo.service.mapper.UserInfoService;
 import com.guo.utils.SecurityUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -26,6 +28,8 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@CrossOrigin(originPatterns = "*",allowCredentials = "true")
+@Api(tags = "用户接口")
 public class UserController {
 
     @Autowired
@@ -37,6 +41,7 @@ public class UserController {
     //用户登录api
 
     @PostMapping("/login")
+    @ApiOperation("用户登录接口")
     public BaseEntity login(@RequestParam("userid") String userid,
                             @RequestParam("password") String password) {
         Subject subject = SecurityUtils.getSubject();
@@ -66,8 +71,9 @@ public class UserController {
 
     //登出
 
-    @RequestMapping("/logout")
+    @PostMapping("/logout")
     @RequiresRoles("user")
+    @ApiOperation("用户登出")
     public BaseEntity logoutUser() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
@@ -78,6 +84,7 @@ public class UserController {
     //注册
 
     @PostMapping("/register")
+    @ApiOperation("用户注册")
     public BaseEntity userRegister(@RequestParam("password") String password,
                                    @RequestParam("username") String username,
                                    @RequestParam("userid") int userid) {
@@ -98,6 +105,7 @@ public class UserController {
     //没有登录的界面
 
     @GetMapping("/nologin")
+    @ApiOperation("用户没有登录")
     public BaseEntity noLoginPage() {
         return BaseEntity.failed(103, "还未登录");
     }
@@ -105,11 +113,14 @@ public class UserController {
     //给用户更新用户资料的api
 
     @PostMapping("/user/updateinfo")
+    @ApiOperation("用户更新个人资料api")
     public BaseEntity updateUserInfo(@RequestParam(value = "userName",required = false)String userName,
-                                     @RequestParam(value = "email",required = false)String email){
+                                     @RequestParam(value = "email",required = false)String email,
+                                     @RequestParam(value = "userId")int userId){
         Map<String,Object> map = new HashMap<>();
         map.put("userName",userName);
         map.put("email",email);
+        map.put("userId",userId);
         int num = 0;
         try {
             num = userInfoService.updateUserInfo(map);
@@ -128,6 +139,7 @@ public class UserController {
     //更新或上传用户头像api
 
     @PostMapping("/userinfo/update/headshot")
+    @ApiOperation("用户上传头像api")
     public BaseEntity updateHeadShot(MultipartFile multipartFile,
                                      @RequestParam("userId")int userId) throws IOException {
         int result = userInfoService.updateImg(userId,multipartFile);
@@ -138,6 +150,7 @@ public class UserController {
         }
     }
     @GetMapping("/userinfo/headshot")
+    @ApiOperation("获取用户头像")
     public BaseEntity<String> getUserImg(@RequestParam("userId")int userId) throws IOException {
         return BaseEntity.success(userInfoService.getHeadShotBase64(userId));
     }

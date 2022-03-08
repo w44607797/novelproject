@@ -1,12 +1,16 @@
 package com.guo.controller;
 
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.guo.bean.BaseEntity;
 import com.guo.bean.Novel;
 import com.guo.service.mapper.FileService;
 import com.guo.service.mapper.NovelService;
 import com.guo.utils.FileUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,8 @@ import java.util.Objects;
 @RequestMapping("/author")
 @RequiresRoles(value = {"user","admin"},logical = Logical.OR)
 @Slf4j
+@CrossOrigin(originPatterns = "*",allowCredentials = "true")
+@Api(tags = "作者接口")
 public class AuthorController {
 
     @Autowired
@@ -31,12 +37,14 @@ public class AuthorController {
 
     //提交小说
     @PostMapping("/admit")
+    @ApiOperation("提交小说")
     public BaseEntity admitNovel(@RequestParam("novelName") String novelName,
-                             @RequestParam("text")String text,
+                             @RequestParam(value = "text",required = false)String text,
                              @RequestParam("authorName")String authorName,
                              @RequestParam("authorId")int authorId,
                              @RequestParam("title")String title,
-                             @RequestParam("type")String type){
+                             @RequestParam("type")String type,
+    @RequestParam("uploadTime")String uploadtime){
         Novel novel = new Novel();
         novel.setNovelName(novelName);
         novel.setAuthorId(authorId);
@@ -45,17 +53,20 @@ public class AuthorController {
         novel.setTitle(title);
         novel.setType(type);
         novel.setStatus((byte)0);
+        novel.setUploadTime(uploadtime);
         try {
             novelService.insertNovel(novel);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
             log.error("小说上传失败");
-            return BaseEntity.failed(500,"小说上传失败，请联系管理员");
+            return BaseEntity.failed(501,"小说上传失败，请联系管理员");
         }
         return BaseEntity.success();
     }
 
     @PostMapping("/uploadcontent")
+    @ApiOperation("追加写入小说内容")
     public BaseEntity uploadNovelContent(@RequestParam("novelId")int novelId,
                                          @RequestParam("content")String content) throws IOException {
 
@@ -74,6 +85,7 @@ public class AuthorController {
     //上传小说封面的API
 
     @PostMapping("/coverfile/upload/{novelId}")
+    @ApiOperation("上传小说封面")
     public BaseEntity uploadImgFile(MultipartFile file,
                                     @PathVariable("novelId") int novelId) throws IOException {
 
@@ -100,6 +112,7 @@ public class AuthorController {
     //上传小说内容文件API
 
     @PostMapping("/textfile/upload/{novelid}")
+    @ApiOperation("上传小说内容，txt文件")
     public BaseEntity uploadTextFile(MultipartFile file,
                                      @PathVariable("novelid")int novelId) throws IOException {
 

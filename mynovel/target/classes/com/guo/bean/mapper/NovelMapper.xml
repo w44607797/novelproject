@@ -42,7 +42,7 @@
     <insert id="insertNovel">
         insert into novelproject.novel (novel_name, novel_id, upload_time,
                                         text_Path, author_name, author_id, title,
-                                        imgPath, status, type)
+                                        img_path, status, type)
             value
             (#{novelName},#{novelId},#{uploadTime},#{textPath},#{authorName},#{authorId},
             #{title},#{imgPath},#{status},#{type})

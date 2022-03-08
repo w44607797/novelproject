@@ -9,6 +9,7 @@ com\guo\service\mapper\FileService.class
 com\guo\bean\Account.class
 com\guo\service\mapper\AccountService.class
 com\guo\bean\mapper\NovelMapper.class
+com\guo\config\NoPermissionException.class
 com\guo\bean\UserInfo.class
 com\guo\bean\Novel.class
 com\guo\controller\NovelController.class
@@ -18,6 +19,7 @@ com\guo\MainApplication.class
 com\guo\config\DruidConfig.class
 com\guo\bean\BaseEntity.class
 com\guo\config\ShiroConfig.class
+com\guo\config\SwaggerConfig.class
 com\guo\controller\ShareController.class
 com\guo\service\impl\NovelServiceImpl.class
 com\guo\service\impl\UserInfoImpl.class

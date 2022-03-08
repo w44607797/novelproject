@@ -80,7 +80,16 @@ public class UserInfoImpl implements UserInfoService {
 
     @Override
     public String getHeadShotBase64(int userId) throws IOException {
-        String userImgPath = userInfoMapper.getUserImgPath(userId);
+        String userImgPath =null;
+        try {
+            userImgPath = userInfoMapper.getUserImgPath(userId);
+        }catch (Exception e){
+            log.error("查询用户头像失败");
+            return null;
+        }
+        if (userImgPath==null){
+            return null;
+        }
         File file = new File(userImgPath);
         String base64 = FileUtil.fileToBase64(file);
         return base64;

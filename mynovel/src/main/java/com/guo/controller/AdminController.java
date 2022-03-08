@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ser.Serializers;
 import com.guo.bean.BaseEntity;
 import com.guo.bean.Novel;
 import com.guo.service.mapper.NovelService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +23,15 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/admin")
 @RequiresRoles(value = "admin")
+@CrossOrigin(originPatterns = "*",allowCredentials = "true")
+@Api(tags = "管理员接口")
 public class AdminController {
 
     @Autowired
     NovelService novelService;
 
     @GetMapping("/audit")
+    @ApiOperation(value = "获得待审小说")
     public BaseEntity<List<Novel>> auditNovel() {
         List<Novel> pandingNovel = novelService.getPandingNovel();
         if (pandingNovel == null) {
@@ -37,6 +43,7 @@ public class AdminController {
     //管理员审核小说
 
     @DeleteMapping("/novel/delete/{id}")
+    @ApiOperation(value = "不通过小说")
     public BaseEntity auditDelete(@PathVariable("id") int id) {
         int result = novelService.deletePandingNovel(id);
         if (result == -1) {
@@ -51,6 +58,7 @@ public class AdminController {
     //审核小说通过api
 
     @PutMapping("/novel/pass/{id}")
+    @ApiOperation(value = "通过小说")
     public BaseEntity auditPass(@PathVariable("id") int id) {
         int i = novelService.passPandingNovel(id);
         if (i == 0) {
